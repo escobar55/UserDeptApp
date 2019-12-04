@@ -17,7 +17,7 @@ public class Department {
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    public Set<Department> departments; //*******
+    public Set<User> users; //*******
 
     public long getId() {
         return id;
@@ -35,11 +35,12 @@ public class Department {
         this.deptName = deptName;
     }
 
-    public Set<Department> getDepartments() {
-        return departments;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setDepartments(Set<Department> departments) {
-        this.departments = departments;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
+
 }

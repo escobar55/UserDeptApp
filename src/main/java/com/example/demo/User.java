@@ -30,11 +30,14 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private User user;
     private Collection<Role> roles;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     public User(){
     }
@@ -106,12 +109,12 @@ public class User {
         this.username = username;
     }
 
-    public User getUser() {
-        return user;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Collection<Role> getRoles() {

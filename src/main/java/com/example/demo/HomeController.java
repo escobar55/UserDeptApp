@@ -24,17 +24,20 @@ public class HomeController {
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
         model.addAttribute("user", new User());
+        model.addAttribute("departments", departmentRepository.findAll());
         return "registration";
     }
 
     @PostMapping("/register")
-    public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model){
+    public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
+                                          @RequestParam("departmentid") long departmentid){
         model.addAttribute("user", user);
         if(result.hasErrors()){
             return "registration";
         }
         else {
             userService.saveUser(user);
+            userRepository.save(user);
             model.addAttribute("message", "User Account Created");
         }
         return "index";
@@ -74,27 +77,6 @@ public class HomeController {
         departmentRepository.save(department);
         return "redirect:/";
     }
-
-    //Employee****
-    @GetMapping("/addUser")
-    public String employeeForm(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("departments", departmentRepository.findAll());
-        return "userform";
-    }
-
-    @PostMapping("/processUser")
-    public String processEmp(@Valid @ModelAttribute User user, BindingResult result,
-                             @RequestParam("departmentid") long departmentid){
-        if(result.hasErrors()){
-            return "userform";
-        }
-        userRepository.save(user);
-        return "redirect:/";
-    }
-
-
-
-
+    //*******
 
 }
