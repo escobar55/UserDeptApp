@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -17,6 +14,12 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
@@ -37,7 +40,9 @@ public class HomeController {
         return "index";
     }
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("deparments", departmentRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return "index";
     }
 
@@ -46,13 +51,50 @@ public class HomeController {
         return "login";
     }
 
-    @Autowired
-    UserRepository userRepository;
-
     @RequestMapping("/secure")
     public String secure(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("user", userRepository.findByUsername(username));
         return "secure";
     }
+
+    //********after security
+    //**department
+    @GetMapping("/addDepartment")
+    public String departmentForm(Model model){
+        model.addAttribute("department", new Department());
+        return "departmentform";
+    }
+
+    @PostMapping("/processDepartment")
+    public String processDept(@Valid @ModelAttribute Department department, BindingResult result){
+        if(result.hasErrors()){
+            return "departmentform";
+        }
+        departmentRepository.save(department);
+        return "redirect:/";
+    }
+
+    //Employee****
+    @GetMapping("/addUser")
+    public String employeeForm(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("departments", departmentRepository.findAll());
+        return "userform";
+    }
+
+    @PostMapping("/processUser")
+    public String processEmp(@Valid @ModelAttribute User user, BindingResult result,
+                             @RequestParam("departmentid") long departmentid){
+        if(result.hasErrors()){
+            return "userform";
+        }
+        userRepository.save(user);
+        return "redirect:/";
+    }
+
+
+
+
+
 }
