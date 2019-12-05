@@ -9,15 +9,34 @@
 <a href="/secure">Secure Page (Admin Login)</a>
 <h1>Departments & Employee list </h1>
 
+<table>
+    <thead>
+    <tr>
+       <th>Department</th>
+        <th>Employee</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="deparment : ${deparments}">
+        <td th:text="${deparment.deptName}"> </td><br/>
+     <div   th:each="user : ${deparment.users}">
+        <td th:text="${user.firstName}">   </td>
+     </div>
+    </tr>
+    </tbody>
+</table>
+<!--
 <div th:each="deparment : ${deparments}">
-    <h2 th:text="${deparment.deptName}"></h2>
+    <h2>Department: </h2>
+    <h3 th:text="${deparment.deptName}"></h3>
 
-<h3>Employees in this department: </h3>
+<h2>Employees in this department: </h2>
 <div th:each="user : ${deparment.users}">
-    <h2 th:text="${user.firstName}"></h2>
+    <h3 th:text="${user.firstName}"></h3>
 
 </div>
 </div>
+-->
 </body>
 </html>
 
