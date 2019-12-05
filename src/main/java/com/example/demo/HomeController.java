@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -21,6 +22,7 @@ public class HomeController {
     @Autowired
     UserRepository userRepository;
 
+    //****Add user
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
         model.addAttribute("user", new User());
@@ -31,21 +33,40 @@ public class HomeController {
     @PostMapping("/register")
     public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
                                           @RequestParam("departmentid") long departmentid){
+        //*******
+
+        //Department department = departmentRepository.findById(departmentid)
+
+        user.setDepartment(departmentRepository.findById(departmentid).get());
+        userRepository.save(user);
+        Department department = departmentRepository.findById(departmentid).get();
+        Set<User> users = department.getUsers();
+
+        users.add(user);
+        department.setUsers(users);
+        departmentRepository.save(department);
+
+        //*******
         model.addAttribute("user", user);
         if(result.hasErrors()){
             return "registration";
         }
         else {
-            userService.saveUser(user);
+            //userService.saveUser(user);
             model.addAttribute("message", "User Account Created");
         }
         //userRepository.save(user);
         return "redirect:/";
     }
+
+    //****Index
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("deparments", departmentRepository.findAll());
         model.addAttribute("users", userRepository.findAll());
+        //****
+        User user = new User();
+
         return "index";
     }
 
@@ -70,7 +91,16 @@ public class HomeController {
     }
 
     @PostMapping("/processDepartment")
-    public String processDept(@Valid @ModelAttribute Department department, BindingResult result){
+    public String processDept(@Valid @ModelAttribute Department department, BindingResult result
+                              ){
+        //*****
+        /*
+        User user = new User();
+        user.setDepartment(departmentRepository.findById(departmentid).get());
+        userRepository.save(user);
+
+         */
+        //***
         if(result.hasErrors()){
             return "departmentform";
         }
