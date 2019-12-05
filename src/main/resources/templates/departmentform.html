@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="base :: navlinks"></div>
 <h1>Department Form</h1>
 <div>
 <form action="#" th:action="@{/processDepartment}" th:object="${department}" method="post">
