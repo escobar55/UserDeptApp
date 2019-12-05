@@ -37,10 +37,10 @@ public class HomeController {
         }
         else {
             userService.saveUser(user);
-            userRepository.save(user);
             model.addAttribute("message", "User Account Created");
         }
-        return "index";
+        //userRepository.save(user);
+        return "redirect:/";
     }
     @RequestMapping("/")
     public String index(Model model) {
