@@ -108,5 +108,10 @@ public class HomeController {
         return "redirect:/";
     }
     //*******
+    @PostMapping("/search")
+    public String search(Model model, @RequestParam("search") String search){
+        model.addAttribute("departments", departmentRepository.findByDeptNameContainingIgnoreCase(search));
+        return "search";
+    }
 
 }
