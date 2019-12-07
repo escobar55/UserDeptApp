@@ -7,6 +7,27 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 <br/>
+
+<div th:each="deparment : ${departments}">
+    <h3>Department: <span th:text="${deparment.deptName}"></span> </h3>
+    <h3>Employees in this department: </h3>
+
+    <ul>
+        <div th:each="user : ${deparment.users}" >
+            <img th:src="${user.headshot}" height="200">
+            <br/>
+            <li th:inline="text">
+                First Name: [[${user.firstName}]] <br/>
+                Last Name: [[${user.lastName}]] <br/>
+                Email: [[${user.email}]] <br/>
+                <br/>
+                <br/>
+            </li>
+        </div>
+    </ul>
+</div>
+
+<!--
 <table>
     <thead>
     <tr>
@@ -23,6 +44,7 @@
     </tr>
     </tbody>
 </table>
+-->
 
 </body>
 </html>

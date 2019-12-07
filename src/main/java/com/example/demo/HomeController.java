@@ -1,13 +1,19 @@
 package com.example.demo;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+//import org.springframework.util.ObjectUtils;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -22,6 +28,9 @@ public class HomeController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CloudinaryConfig cloudc;
+
     //****Add user
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
@@ -32,11 +41,9 @@ public class HomeController {
 
     @PostMapping("/register")
     public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
-                                          @RequestParam("departmentid") long departmentid){
-        //*******
-
-        //Department department = departmentRepository.findById(departmentid)
-
+                                          @RequestParam("departmentid") long departmentid,@RequestParam("file") MultipartFile file ){
+        model.addAttribute("user", user);
+        //***connection***
         user.setDepartment(departmentRepository.findById(departmentid).get());
         userRepository.save(user);
         Department department = departmentRepository.findById(departmentid).get();
@@ -45,16 +52,30 @@ public class HomeController {
         users.add(user);
         department.setUsers(users);
         departmentRepository.save(department);
+        //***************
 
-        //*******
-        model.addAttribute("user", user);
         if(result.hasErrors()){
             return "registration";
         }
+
+        if (file.isEmpty()) {
+            return "redirect:/";
+        }
         else {
+
             //userService.saveUser(user);
             model.addAttribute("message", "User Account Created");
         }
+        try {
+            Map uploadResults = cloudc.upload(file.getBytes(),
+                    ObjectUtils.asMap("resourcetype", "auto"));
+            user.setHeadshot(uploadResults.get("url").toString());
+            userRepository.save(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/register";
+        }
+
         //userRepository.save(user);
         return "redirect:/";
     }

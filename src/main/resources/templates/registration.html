@@ -9,7 +9,8 @@
 <form autocomplete="off"
       action="#"
       th:action="@{/register}"
-      th:object="${user}" method="post">
+      th:object="${user}" method="post"
+      enctype="multipart/form-data">
 
     First Name: <mark><strong>
     <span th:if="${#fields.hasErrors('firstName')}"
@@ -46,7 +47,9 @@
          <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.deptName}"></option>
      </select>
 
-
+    <br/>
+    <input type="file" name="file" />
+    <br/>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 

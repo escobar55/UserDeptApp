@@ -39,6 +39,8 @@ public class User {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    private String headshot;
+
     public User(){
     }
 
@@ -123,5 +125,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getHeadshot() {
+        return headshot;
+    }
+
+    public void setHeadshot(String headshot) {
+        this.headshot = headshot;
     }
 }

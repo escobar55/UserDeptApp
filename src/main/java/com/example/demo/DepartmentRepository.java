@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface DepartmentRepository extends CrudRepository<Department, Long> {
 
-    Object findByDeptNameContainingIgnoreCase(String deptName);
+    ArrayList<Department> findByDeptNameContainingIgnoreCase(String deptName);
 }
 

@@ -10,11 +10,35 @@
 <a href="/secure">Secure Page (Admin Login)</a>
 <h1>Departments & Employee list </h1>
 
+<div th:each="deparment : ${deparments}">
+    <h3>Department: <span th:text="${deparment.deptName}"></span> </h3>
+    <h3>Employees in this department: </h3>
+
+    <ul>
+    <div th:each="user : ${deparment.users}" >
+        <img th:src="${user.headshot}" height="200">
+        <br/>
+        <li th:inline="text">
+        First Name: [[${user.firstName}]] <br/>
+        Last Name: [[${user.lastName}]] <br/>
+            Email: [[${user.email}]] <br/>
+            <br/>
+            <br/>
+        </li>
+    </div>
+    </ul>
+</div>
+
+
+
+
+<!--
 <table>
     <thead>
     <tr>
        <th>Department</th>
         <th>Employee</th>
+        <th>Employee Picture</th>
     </tr>
     </thead>
     <tbody>
@@ -22,10 +46,15 @@
         <td th:text="${deparment.deptName}"> </td><br/>
      <div   th:each="user : ${deparment.users}">
         <td th:text="${user.firstName}">   </td>
+         <div th:if="${user.headshot} != null">
+           <td>  <img th:src="${user.headshot}" height="200">  </td>
+     </div>
      </div>
     </tr>
     </tbody>
 </table>
+</div>
+-->
 <!--
 <div th:each="deparment : ${deparments}">
     <h2>Department: </h2>
