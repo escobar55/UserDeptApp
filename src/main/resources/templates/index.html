@@ -16,11 +16,16 @@
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
-<h2>Insecure page</h2>
-<a href="/secure">Secure Page (Admin Login)</a>
-<h1>Departments & Employee list </h1>
+
+
+<h2 class="title-style" style="text-align: center">Department & Employee Database</h2>
+
+<a href="/secure" style="text-align: center">Admon click here to log in</a>
+
+<p class="square">hello </p>
 
 <div th:each="deparment : ${deparments}">
+    <h1 class="center-text">Departments & Employee list </h1>
     <h3>Department: <span th:text="${deparment.deptName}"></span> </h3>
     <h3>Employees in this department: </h3>
 
@@ -77,6 +82,8 @@
 </div>
 </div>
 -->
+
+
 </body>
 </html>
 
