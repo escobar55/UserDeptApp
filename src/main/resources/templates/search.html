@@ -19,7 +19,7 @@
 <div th:replace="base :: navlinks"></div>
 <br/>
 
-<div th:each="deparment : ${departments}">
+<div class="square-display" th:each="deparment : ${departments}">
     <h3>Department: <span th:text="${deparment.deptName}"></span> </h3>
     <h3>Employees in this department: </h3>
 
