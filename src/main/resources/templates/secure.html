@@ -16,17 +16,25 @@
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
-<h3>Admin Secure Page</h3>
-<a href="/logout">Logout</a>
-<h4>Welcome!</h4>
-<p th:text="${user.lastName}"></p>
+<div class="container">
+    <div class="jumbotron">
+        <h3 class="h1-headline-center">Admin Secure Page</h3>
+        <a class="right" href="/logout">Logout</a>
+
+        <h4>Welcome!</h4>
+        <p th:text="${user.lastName}"></p>
+
+        <h5>As an Admin you can:  </h5>
+        <a href="/addDepartment">Add a Department</a>
+        <br/>
+        <a href="/register"> Add an Employee</a>
+
+    </div>
+</div>
+</body>
+</html>
+
 <!--
 <h4>email</h4>
 <p th:text="${user.email}"></p><br/>
 -->
-<h5>As an Admin you can:  </h5>
-<a href="/addDepartment">Add a Department</a>
-<br/>
-<a href="/register"> Add an Employee</a>
-</body>
-</html>

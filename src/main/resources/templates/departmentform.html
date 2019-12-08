@@ -16,16 +16,24 @@
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
-<h1>Department Form</h1>
-<div>
-<form action="#" th:action="@{/processDepartment}" th:object="${department}" method="post">
-    <input type="hidden" th:field="*{id}" />
+<div class="square">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Department Form</h1>
+            <div>
+                <div class="card-body px-lg-5 pt-0">
+                <form action="#" th:action="@{/processDepartment}" th:object="${department}" method="post">
+                    <input type="hidden" th:field="*{id}" />
 
-    Department Name: <input type="text" th:field="*{deptName}" />
-    <span th:if="${#fields.hasErrors('deptName')}" th:errors="*{deptName}"></span><br/>
+                    Department Name: <input class="form-control" size="45" type="text" th:field="*{deptName}" />
+                    <span th:if="${#fields.hasErrors('deptName')}" th:errors="*{deptName}"></span><br/>
 
-    <input type="submit" value="Submit" />
-</form>
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

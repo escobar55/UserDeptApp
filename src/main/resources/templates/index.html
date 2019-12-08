@@ -18,32 +18,42 @@
 <div th:replace="base :: navlinks"></div>
 
 
-<h2 class="title-style" style="text-align: center">Department & Employee Database</h2>
 
-<a href="/secure" style="text-align: center">Admon click here to log in</a>
+        <h2 class="title-style" style="text-align: center">Department & Employee Database</h2>
 
-<p class="square">hello </p>
-
-<div th:each="deparment : ${deparments}">
-    <h1 class="center-text">Departments & Employee list </h1>
-    <h3>Department: <span th:text="${deparment.deptName}"></span> </h3>
-    <h3>Employees in this department: </h3>
-
-    <ul>
-    <div th:each="user : ${deparment.users}" >
-        <img th:src="${user.headshot}" height="200">
+        <p class="square">Welcome to the Department & Employee database! If you are an employee you can search for a department
+            in the search bar. If you are an Administrator, please <a href="/secure" style="text-align: center">click here</a> to
+            log in into the secure page.
+        </p>
         <br/>
-        <li th:inline="text">
-        First Name: [[${user.firstName}]] <br/>
-        Last Name: [[${user.lastName}]] <br/>
-            Email: [[${user.email}]] <br/>
-            <br/>
-            <br/>
-        </li>
-    </div>
-    </ul>
-</div>
 
+
+
+        <div class="square-display" th:each="deparment : ${deparments}">
+            <h1>Departments & Employee list </h1>
+            <br/>
+            <br/>
+            <h4>Department: <span th:text="${deparment.deptName}"></span> </h4>
+            <h4>Employees in this department: </h4>
+
+            <ul>
+                <div th:each="user : ${deparment.users}" >
+                    <img th:src="${user.headshot}" height="200">
+                    <br/>
+                    <li th:inline="text">
+                        First Name: [[${user.firstName}]] <br/>
+                        Last Name: [[${user.lastName}]] <br/>
+                        Email: [[${user.email}]] <br/>
+                        <br/>
+                        <br/>
+                    </li>
+                </div>
+            </ul>
+        </div>
+
+
+</body>
+</html>
 
 
 
@@ -82,8 +92,3 @@
 </div>
 </div>
 -->
-
-
-</body>
-</html>
-
