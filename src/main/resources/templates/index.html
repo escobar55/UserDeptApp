@@ -44,12 +44,15 @@
                         First Name: [[${user.firstName}]] <br/>
                         Last Name: [[${user.lastName}]] <br/>
                         Email: [[${user.email}]] <br/>
+                        <h3>Send and email! </h3>
+                        <a th:href="@{/sendemail/{id}(id=${user.id})}">Send Email</a>
                         <br/>
                         <br/>
                     </li>
                 </div>
             </ul>
         </div>
+
 
 
 </body>

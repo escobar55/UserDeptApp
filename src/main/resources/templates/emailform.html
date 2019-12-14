@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#"
+      th:action="@{/sendemail/{id}"
+      th:object="${emails}"
+      method="post"
+      enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    Message: <textarea class="form-control" size="45" rows="3" th:field="*{emailText}" />
+    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"> </span> <br />
+
+
+</form>
+
+
+</body>
+</html>

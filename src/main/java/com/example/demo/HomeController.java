@@ -2,6 +2,9 @@ package com.example.demo;
 
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 //import org.springframework.util.ObjectUtils;
@@ -14,6 +17,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
+//import java.util.Properties;
 import java.util.Set;
 
 @Controller
@@ -30,6 +34,9 @@ public class HomeController {
 
     @Autowired
     CloudinaryConfig cloudc;
+
+    @Autowired
+    SendEmail sendEmail;
 
     //****Add user
     @GetMapping("/register")
@@ -133,6 +140,56 @@ public class HomeController {
     public String search(Model model, @RequestParam("search") String search){
         model.addAttribute("departments", departmentRepository.findByDeptNameContainingIgnoreCase(search));
         return "search";
+    }
+
+    //Implementing email
+    /*
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("supersupervisor89@gmail.com");
+        mailSender.setPassword("superpassword");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
+
+     */
+      /*
+    @RequestMapping("/sendemail/{id}")
+    public String sendEmail(@PathVariable("id") long userId,
+            Model model){
+        //model.addAttribute("emails", userRepository.findById(userId).get());
+        //User empEmail = userRepository.findById(userId).get();
+        model = sendEmail.SendSimpleEmail(model, userId);
+        //sendEmail.SendSimpleEmail();
+        return "confirmemail";
+    }
+
+       */
+
+    @RequestMapping("/sendemail/{id}")
+    public String sendEmail(@PathVariable("id") long userId,
+                            Model model){
+        //model.addAttribute("emails", userRepository.findById(userId).get());
+        //User empEmail = userRepository.findById(userId).get();
+        model = sendEmail.SendSimpleEmail(model, userId);
+        //sendEmail.SendSimpleEmail();
+        return "confirmemail";
+    }
+
+    @GetMapping("/sendemail")
+    public  String sendEmail(Model model){
+        model.addAttribute("emailtext", new EmailText());
+        return "emailform";
     }
 
 }
